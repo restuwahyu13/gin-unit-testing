@@ -10,11 +10,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+var router = SetupRouter()
+
 func TestUnitTestingExampleGET(t *testing.T) {
 
-	router := SetupRouter()
-
-	rr := utils.HttpTestRequest(router, "GET", "/", nil)
+	rr, req := utils.HttpTestRequest("GET", "/", nil)
+	req.Header.Set("Content-Type", "application/json")
+	router.ServeHTTP(rr, <-request)
 
 	response := utils.Parse(rr.Body.Bytes())
 
@@ -26,14 +28,14 @@ func TestUnitTestingExampleGET(t *testing.T) {
 
 func TestUnitTestingExamplePOST(t *testing.T) {
 
-	router := SetupRouter()
-
 	payload := gin.H{
 		"name": "restu wahyu saputra",
 		"age":  25,
 	}
 
-	rr := utils.HttpTestRequest(router, "POST", "/", utils.Strigify(payload))
+	rr, req := utils.HttpTestRequest("POST", "/", utils.Strigify(payload))
+	req.Header.Set("Content-Type", "application/json")
+	router.ServeHTTP(rr, <-request)
 
 	response := utils.Parse(rr.Body.Bytes())
 
