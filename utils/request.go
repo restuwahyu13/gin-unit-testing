@@ -28,7 +28,6 @@ func HttpTestRequest(handler http.Handler, method, url string, payload []byte) (
 	}
 
 	rr := httptest.NewRecorder()
-	handler.ServeHTTP(rr, <-request)
 
 	return rr, <-request
 }
